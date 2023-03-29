@@ -1,0 +1,6 @@
+[submodule "aede"]
+	url = https://github.com/keithtjj/aede.git
+[submodule "far_planner"]
+	url = https://github.com/keithtjj/far_planner
+[submodule "tare_planner"]
+	url = https://github.com/keithtjj/tare_planner

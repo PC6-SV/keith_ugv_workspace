@@ -16,17 +16,17 @@ RUN rosdep update
 
 RUN mkdir -p /test && \
     cd /test/ && \
-    git clone https://github.com/keithtjj/aede.git
+    git clone --recurse-submodules https://github.com/keithtjj/aede.git
 RUN source /opt/ros/noetic/setup.bash && \
     cd /test/aede && \
     rosdep install --from-paths src --ignore-src -r -y && \
     catkin_make
-RUN cd /test && git clone https://github.com/keithtjj/tare_planner.git
+RUN cd /test && git clone --recurse-submodules https://github.com/keithtjj/tare_planner.git
 RUN source /opt/ros/noetic/setup.bash && \
     cd /test/tare_planner && \
     rosdep install --from-paths src --ignore-src -r -y && \
     catkin_make
-RUN cd /test && git clone https://github.com/keithtjj/far_planner.git
+RUN cd /test && git clone --recurse-submodules https://github.com/keithtjj/far_planner.git
 RUN source /opt/ros/noetic/setup.bash && \
     cd /test/far_planner && \
     rosdep install --from-paths src --ignore-src -r -y && \
