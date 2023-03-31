@@ -11,7 +11,11 @@ ENV NVIDIA_DRIVER_CAPABILITIES \
 
 SHELL [ "/bin/bash" , "-c" ]
 RUN apt-get update
-RUN apt-get install -y git && apt-get install -y python3-pip python3-catkin-tools
+COPY packages.txt /test/
+COPY mqtt_bridge-requirements.txt /test/
+RUN cd /test/ && \
+    xargs -a packages.txt apt-get install -y && \
+    pip3 install -r mqtt_bridge-requirements.txt
 RUN rosdep update
 
 RUN mkdir -p /test && \
@@ -32,5 +36,6 @@ RUN source /opt/ros/noetic/setup.bash && \
     rosdep install --from-paths src --ignore-src -r -y && \
     catkin_make
 RUN cd /test
+
 
 RUN echo "ALL Done"

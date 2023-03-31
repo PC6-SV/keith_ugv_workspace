@@ -1,0 +1,14 @@
+python3-pip
+python3-catkin-tools
+
+nano
+git
+curl
+unzip
+python3-tk
+python3-scipy
+iputils-ping
+libcanberra-gtk-module
+libcanberra-gtk3-module
+mosquitto mosquitto-clients
+

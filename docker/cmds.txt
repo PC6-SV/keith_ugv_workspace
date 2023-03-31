@@ -1,0 +1,12 @@
+xhost local:root
+
+docker built -t ugv_base .
+
+docker exec -it ugv1 bash
+
+./src/vehicle_simulator/mesh/download_environments.sh
+
+source devel/setup.sh
+
+
+docker run -it --name broker --network netty -v /home/intern/test/docker/mosquitto.conf:/mosquitto/config/mosquitto.conf eclipse-mosquitto
