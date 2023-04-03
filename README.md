@@ -1,6 +1,6 @@
 # ugv_workspace
 ## Getting Started
-#### For Windows
+#### Pre-Requisites (Windows):
 - Get Docker desktop installed and running by following this [Guide](https://docs.docker.com/desktop/install/windows-install/)
 - Ensure WSL-2 is installed or upgraded from WSL-1 (if you have older version).
 - Install VcXsrv Windows X Server from this [link](https://sourceforge.net/projects/vcxsrv/) 
@@ -11,20 +11,22 @@
 docker build -t ugv_base --no-cache .
 ```
 
-2) **Linux** Run the docker image using the bash file
+2) Run the docker image
+
+**For Linux** Run the docker image using the bash file
+```
+./create_container.bash ugv1
+```
 - Note : make the bash files executable first
    ```
    chmod +x create_container.bash
    ```
-```
-./create_container.bash ugv1
-```
-- Remember to open xhost before starting old container
-```
-xhost local:root
-```
+- Remember to open xhost if not using bash file
+   ```
+   xhost local:root
+   ```
 
-   **Windows** 
+**For Windows** Run the docker image using
 ```
 docker run -it --name ugv1 -e DISPLAY=host.docker.internal:0.0 -e LIBGL_ALWAYS_INDIRECT=0 --runtime=nvidia ugv_base bash
 ```
