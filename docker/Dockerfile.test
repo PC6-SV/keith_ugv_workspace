@@ -11,31 +11,31 @@ ENV NVIDIA_DRIVER_CAPABILITIES \
 
 SHELL [ "/bin/bash" , "-c" ]
 RUN apt-get update
-COPY packages.txt /reqs/
-COPY mqtt_bridge-requirements.txt /reqs/
-RUN cd /reqs/ && \
+COPY packages.txt /test/
+COPY mqtt_bridge-requirements.txt /test/
+RUN cd /test/ && \
     xargs -a packages.txt apt-get install -y && \
     pip3 install -r mqtt_bridge-requirements.txt
-RUN rm -r reqs
 RUN rosdep update
 
-RUN git clone --recurse-submodules https://github.com/keithtjj/aede.git
+RUN mkdir -p /test && \
+    cd /test/ && \
+    git clone --recurse-submodules https://github.com/keithtjj/aede.git
 RUN source /opt/ros/noetic/setup.bash && \
-    cd /aede && \
+    cd /test/aede && \
     rosdep install --from-paths src --ignore-src -r -y && \
     catkin_make
-RUN /aede/src/vehicle_simulator/mesh/download_environments.sh
-    
-RUN git clone --recurse-submodules https://github.com/keithtjj/tare_planner.git
+RUN cd /test && git clone --recurse-submodules https://github.com/keithtjj/tare_planner.git
 RUN source /opt/ros/noetic/setup.bash && \
-    cd /tare_planner && \
+    cd /test/tare_planner && \
     rosdep install --from-paths src --ignore-src -r -y && \
     catkin_make
-    
-RUN git clone --recurse-submodules https://github.com/keithtjj/far_planner.git
+RUN cd /test && git clone --recurse-submodules https://github.com/keithtjj/far_planner.git
 RUN source /opt/ros/noetic/setup.bash && \
-    cd /far_planner && \
+    cd /test/far_planner && \
     rosdep install --from-paths src --ignore-src -r -y && \
     catkin_make
+RUN cd /test
+
 
 RUN echo "ALL Done"

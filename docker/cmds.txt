@@ -1,10 +1,8 @@
 xhost local:root
 
-docker built -t ugv_base .
+docker build -t ugv_base --no-cache .
 
 docker exec -it ugv1 bash
-
-./src/vehicle_simulator/mesh/download_environments.sh
 
 source devel/setup.sh
 

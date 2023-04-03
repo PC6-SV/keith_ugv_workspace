@@ -9,7 +9,7 @@ xhost local:root
 XAUTH=/tmp/.docker.xauth
 
 docker run -it \
-    --name=ugv2 \
+    --name=$1 \
     --env="DISPLAY=$DISPLAY" \
     --env="QT_X11_NO_MITSHM=1" \
     --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
