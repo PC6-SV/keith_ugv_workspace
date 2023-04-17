@@ -1,6 +1,6 @@
 # This is an example Docker File
 #  Command to build it
-# docker built -t <image name > .
+# docker build -t <image name > .
 FROM osrf/ros:noetic-desktop-full
 
 # nvidia-container-runtime
@@ -11,11 +11,14 @@ ENV NVIDIA_DRIVER_CAPABILITIES \
 
 SHELL [ "/bin/bash" , "-c" ]
 RUN apt-get update
-COPY packages.txt /reqs/
-COPY mqtt_bridge-requirements.txt /reqs/
-RUN cd /reqs/ && \
+RUN mkdir reqs
+COPY packages.txt /reqs
+COPY mqtt_bridge-requirements.txt /reqs
+#COPY yolov7-requirements.txt /reqs
+RUN cd /reqs && \
     xargs -a packages.txt apt-get install -y && \
-    pip3 install -r mqtt_bridge-requirements.txt
+    pip3 install -r mqtt_bridge-requirements.txt 
+# && pip3 install -r yolov7-requirements.txt
 RUN rm -r reqs
 RUN rosdep update
 

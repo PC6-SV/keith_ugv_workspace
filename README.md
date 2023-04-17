@@ -26,7 +26,7 @@ docker build -t ugv_base --no-cache .
    xhost local:root
    ```
 
-**For Windows** Run the docker image using
+**For Windows** Run the docker image using (not tested i just copied this from somewhere)
 ```
 docker run -it --name ugv1 -e DISPLAY=host.docker.internal:0.0 -e LIBGL_ALWAYS_INDIRECT=0 --runtime=nvidia ugv_base bash
 ```
@@ -37,17 +37,25 @@ source aede/devel/setup.sh
 roslaunch vehicle_simulator indoor.launch
 ```
 
-4) Open a new terminal and enter container with
-```
-docker exec -it ugv1 bash
-```
-
-5) Run mosquitto broker
+4) Run mosquitto broker as a new container
 ```
 docker run -it --name broker --network netty -v /home/intern/test/docker/mosquitto.conf:/mosquitto/config/mosquitto.conf eclipse-mosquitto
 ```
 
-6) Execute TARE/FAR Planner launch file
+5) Open a new terminal and enter container with
+```
+docker exec -it ugv1 bash
+```
+
+6) Change the vehicle number in `mqtt_bridge/config/la_params.yaml`
+```
+nano tare_planner/src/mqtt_bridge/config/la_params.yaml
+```
+```
+nano far_planner/src/mqtt_bridge/config/la_params.yaml
+```
+
+7) Execute TARE/FAR Planner launch file
 ```
 source tare_planner/devel/setup.sh
 roslaunch tare_planner explore_indoor.launch
