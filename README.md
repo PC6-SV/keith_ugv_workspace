@@ -1,11 +1,12 @@
 # ugv_workspace
-## Getting Started
 #### Pre-Requisites (Windows):
 - Install VcXsrv Windows X Server from this [link](https://sourceforge.net/projects/vcxsrv/) 
    > **Required** for Graphic Applications to run on Windows **(e.g. Gazebo)**
 #### Linux
 - Install `nvidia-container-toolkit` [link](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker)
 - Ensure system using gpu **(impt for gazebo, check with** `nvidia_smi` **)** `prime-select nvidia`
+
+## Getting Started
 1) Download the Dockerfile from this repo, and build the Docker Image using
 ```
 docker build -t ugv_base --no-cache .
@@ -47,12 +48,12 @@ docker exec -it ugv1 bash
 service mosquitto start
 mosquitto -v
 ```
-**Alternative** Run mosquitto broker as a new container
+**Alternatively,** Run mosquitto broker as a new container
 ```
 docker run -it --name broker --network netty -v /home/intern/test/docker/mosquitto.conf:/mosquitto/config/mosquitto.conf eclipse-mosquitto
 ```
 
-6) Change the vehicle number in `mqtt_bridge/config/la_params.yaml`
+6) Open another terminal and change the vehicle number in `mqtt_bridge/config/la_params.yaml`
 ```
 nano tare_planner/src/mqtt_bridge/config/la_params.yaml
 ```
