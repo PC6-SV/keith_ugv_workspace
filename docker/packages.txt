@@ -10,5 +10,6 @@ python3-scipy
 iputils-ping
 libcanberra-gtk-module
 libcanberra-gtk3-module
-mosquitto mosquitto-clients
+mosquitto
+mosquitto-clients
 

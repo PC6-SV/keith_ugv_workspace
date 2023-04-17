@@ -20,6 +20,7 @@ RUN cd /reqs && \
     pip3 install -r mqtt_bridge-requirements.txt 
 # && pip3 install -r yolov7-requirements.txt
 RUN rm -r reqs
+COPY mosquitto.conf /etc/mosquitto
 RUN rosdep update
 
 RUN git clone --recurse-submodules https://github.com/keithtjj/aede.git

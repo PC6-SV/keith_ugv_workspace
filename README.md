@@ -37,14 +37,19 @@ source aede/devel/setup.sh
 roslaunch vehicle_simulator indoor.launch
 ```
 
-4) Run mosquitto broker as a new container
-```
-docker run -it --name broker --network netty -v /home/intern/test/docker/mosquitto.conf:/mosquitto/config/mosquitto.conf eclipse-mosquitto
-```
-
-5) Open a new terminal and enter container with
+4) Open a new terminal and enter container with
 ```
 docker exec -it ugv1 bash
+```
+
+5) Start mosquitto broker on ugv1
+```
+service mosquitto start
+mosquitto -v
+```
+**Alternative** Run mosquitto broker as a new container
+```
+docker run -it --name broker --network netty -v /home/intern/test/docker/mosquitto.conf:/mosquitto/config/mosquitto.conf eclipse-mosquitto
 ```
 
 6) Change the vehicle number in `mqtt_bridge/config/la_params.yaml`
