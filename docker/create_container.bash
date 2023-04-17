@@ -5,7 +5,6 @@
 ## then run this script
 xhost local:root
 
-
 XAUTH=/tmp/.docker.xauth
 
 docker run -it \
@@ -18,6 +17,7 @@ docker run -it \
     --privileged \
     --runtime=nvidia \
     --network netty \
+    --gpus all \
     ugv_base \
     bash
 
