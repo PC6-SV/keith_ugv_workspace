@@ -1,11 +1,11 @@
 # ugv_workspace
 ## Getting Started
 #### Pre-Requisites (Windows):
-- Get Docker desktop installed and running by following this [Guide](https://docs.docker.com/desktop/install/windows-install/)
-- Ensure WSL-2 is installed or upgraded from WSL-1 (if you have older version).
 - Install VcXsrv Windows X Server from this [link](https://sourceforge.net/projects/vcxsrv/) 
    > **Required** for Graphic Applications to run on Windows **(e.g. Gazebo)**
-
+#### Linux
+- Install `nvidia-container-toolkit` [link](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker)
+- Ensure system using gpu **(impt for gazebo, check with** `nvidia_smi` **)** `prime-select nvidia`
 1) Download the Dockerfile from this repo, and build the Docker Image using
 ```
 docker build -t ugv_base --no-cache .
