@@ -61,16 +61,24 @@ nano tare_planner/src/mqtt_bridge/config/la_params.yaml
 nano far_planner/src/mqtt_bridge/config/la_params.yaml
 ```
 
-7) Execute TARE/FAR Planner launch file
+7) Update `poi_type` in `killer.py` if necessary.
+```
+nano far_planner/src/multi_ugv_behviours/killer.py
+```
+
+8) Execute TARE/FAR Planner launch file
 ```
 source tare_planner/devel/setup.sh
-roslaunch tare_planner explore_indoor.launch
+roslaunch tare_planner explore_indoor.launch 2> >(grep -v TF_REPEATED_DATA buffer_core)
 ```
 ```
 source far_planner/devel/setup.sh
-roslaunch far_planner far+.launch
+roslaunch far_planner far+killer.launch 2> >(grep -v TF_REPEATED_DATA buffer_core)
 ```
-
+```
+source far_planner/devel/setup.sh
+roslaunch far_planner far+follower.launch 2> >(grep -v TF_REPEATED_DATA buffer_core)
+```
 ---
 
 ### Docker Commands
