@@ -61,9 +61,9 @@ nano tare_planner/src/mqtt_bridge/config/la_params.yaml
 nano far_planner/src/mqtt_bridge/config/la_params.yaml
 ```
 
-7) Update `poi_type` in `killer.py` if necessary.
+7) Update `poi_type` in `navi.py` if necessary.
 ```
-nano far_planner/src/multi_ugv_behviours/killer.py
+nano far_planner/src/multi_ugv_behaviours/navi.py
 ```
 
 8) Execute TARE/FAR Planner launch file

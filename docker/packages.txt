@@ -12,4 +12,4 @@ libcanberra-gtk-module
 libcanberra-gtk3-module
 mosquitto
 mosquitto-clients
-
+ros-noetic-octomap

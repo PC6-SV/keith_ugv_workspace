@@ -40,5 +40,4 @@ RUN source /opt/ros/noetic/setup.bash && \
     rosdep install --from-paths src --ignore-src -r -y && \
     catkin_make
 
-RUN echo "ALL Done"
 CMD source ros_entrypoint.sh
