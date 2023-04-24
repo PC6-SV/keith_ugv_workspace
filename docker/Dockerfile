@@ -12,11 +12,11 @@ RUN apt-get update
 RUN mkdir reqs
 COPY packages.txt /reqs
 COPY mqtt_bridge-requirements.txt /reqs
-#COPY yolov7-requirements.txt /reqs
+COPY yolov7-requirements.txt /reqs
 RUN cd /reqs && \
     xargs -a packages.txt apt-get install -y && \
-    pip3 install -r mqtt_bridge-requirements.txt 
-# && pip3 install -r yolov7-requirements.txt
+    pip3 install -r mqtt_bridge-requirements.txt && \
+    pip3 install -r yolov7-requirements.txt
 RUN rm -r reqs
 COPY mosquitto.conf /etc/mosquitto
 RUN rosdep update
