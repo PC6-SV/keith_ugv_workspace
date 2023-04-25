@@ -9,7 +9,7 @@
 ## Getting Started
 1) Download the Dockerfile from this repo, and build the Docker Image using
 ```
-docker build -t ugv_base --no-cache .
+docker build -t ugv_base .
 ```
 
 2) Run the docker image
@@ -80,41 +80,3 @@ source far_planner/devel/setup.sh
 roslaunch far_planner far+follower.launch 2> >(grep -v TF_REPEATED_DATA buffer_core)
 ```
 ---
-
-### Docker Commands
-> Useful docker commands.
-##### 1)  CONTAINERS
-- Stop containers
-```
-sudo docker kill $(sudo docker ps -a)
-```
-- Delete all containers
-```
-docker rm $(docker ps -a -q)
-```
-- Start a container
-```
-docker start (container_id)
-```
-##### 2) IMAGES
-- Delete all images
-```
-docker rmi $(docker images  -q)
-```
-- Removing Dangling images 
-```
-docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
-```
-
-- Connect shell to running container
-```
-docker exec -it (container_id) bash
-```
-
-- Remove Dangling everything (BEWARE!)
-```
-docker container prune
-docker image prune
-```
-
-

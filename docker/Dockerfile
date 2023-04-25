@@ -20,7 +20,7 @@ RUN cd /reqs && \
 RUN rm -r reqs
 COPY mosquitto.conf /etc/mosquitto
 RUN rosdep update
-
+ADD https://api.github.com/repos/keithtjj/multi_ugv_behaviours/git/refs/heads version.json
 RUN git clone --recurse-submodules https://github.com/keithtjj/aede.git
 RUN source /opt/ros/noetic/setup.bash && \
     cd /aede && \
