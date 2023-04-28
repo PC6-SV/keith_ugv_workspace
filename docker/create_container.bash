@@ -1,7 +1,7 @@
 # If not working, first do: sudo rm -rf /tmp/.docker.xauth
 # It still not working, try running the script as root.
 ## Build the image first
-### docker build -t r2_path_planning .
+### docker build -t ugv_base .
 ## then run this script
 xhost local:root
 

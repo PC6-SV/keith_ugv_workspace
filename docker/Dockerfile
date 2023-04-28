@@ -20,20 +20,23 @@ RUN cd /reqs && \
 RUN rm -r reqs
 COPY mosquitto.conf /etc/mosquitto
 RUN rosdep update
-ADD https://api.github.com/repos/keithtjj/multi_ugv_behaviours/git/refs/heads version.json
+
+ADD https://api.github.com/repos/keithtjj/aede/git/refs/heads version.json
 RUN git clone --recurse-submodules https://github.com/keithtjj/aede.git
 RUN source /opt/ros/noetic/setup.bash && \
     cd /aede && \
     rosdep install --from-paths src --ignore-src -r -y && \
     catkin_make
 RUN /aede/src/vehicle_simulator/mesh/download_environments.sh
-    
+
+ADD https://api.github.com/repos/keithtjj/tare_planner/git/refs/heads version.json
 RUN git clone --recurse-submodules https://github.com/keithtjj/tare_planner.git
 RUN source /opt/ros/noetic/setup.bash && \
     cd /tare_planner && \
     rosdep install --from-paths src --ignore-src -r -y && \
     catkin_make
     
+ADD https://api.github.com/repos/keithtjj/far_planner/git/refs/heads version.json
 RUN git clone --recurse-submodules https://github.com/keithtjj/far_planner.git
 RUN source /opt/ros/noetic/setup.bash && \
     cd /far_planner && \
