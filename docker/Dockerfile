@@ -21,24 +21,20 @@ RUN rm -r reqs
 COPY mosquitto.conf /etc/mosquitto
 RUN rosdep update
 
-ADD https://api.github.com/repos/keithtjj/aede/git/refs/heads version.json
-RUN git clone --recurse-submodules https://github.com/keithtjj/aede.git
+ADD https://api.github.com/repos/PC6-SV/keith_ugv_workspace/git/refs/heads version.json
+RUN git clone --recurse-submodules -b complete https://github.com/PC6-SV/keith_ugv_workspace.git
 RUN source /opt/ros/noetic/setup.bash && \
-    cd /aede && \
+    cd /keith_ugv_workspace/aede && \
     rosdep install --from-paths src --ignore-src -r -y && \
     catkin_make
-RUN /aede/src/vehicle_simulator/mesh/download_environments.sh
+RUN /keith_ugv_workspace/aede/src/vehicle_simulator/mesh/download_environments.sh
 
-ADD https://api.github.com/repos/keithtjj/far_planner/git/refs/heads version.json
-RUN git clone --recurse-submodules https://github.com/keithtjj/far_planner.git
 RUN source /opt/ros/noetic/setup.bash && \
-    cd /far_planner && \
+    cd /keith_ugv_workspace/far_planner && \
     rosdep install --from-paths src --ignore-src -r -y && \
     catkin_make
 
-ADD https://api.github.com/repos/keithtjj/tare_planner/git/refs/heads version.json
-RUN git clone --recurse-submodules https://github.com/keithtjj/tare_planner.git
-RUN source /opt/ros/noetic/setup.bash && \
+RUN source /keith_ugv_workspace/opt/ros/noetic/setup.bash && \
     cd /tare_planner && \
     rosdep install --from-paths src --ignore-src -r -y && \
     catkin_make
