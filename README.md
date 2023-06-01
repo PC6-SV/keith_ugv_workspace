@@ -1,5 +1,5 @@
 # ugv_workspace
-See individual repos for more information.
+See individual repo wikis for more information.
 
 ### Pre-Requisites 
 #### Linux:
