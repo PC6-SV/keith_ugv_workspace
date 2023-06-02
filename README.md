@@ -1,11 +1,15 @@
 # ugv_workspace
-#### Pre-Requisites (Windows):
+See individual repos for more information.
+
+### Pre-Requisites 
+#### Linux:
+- Install `nvidia-container-toolkit` [link](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker)
+- Install proprietary Nvidia drivers (Check Additional Drivers app)
+
+#### Windows (NOT TESTED):
 - Install VcXsrv Windows X Server from this [link](https://sourceforge.net/projects/vcxsrv/) 
    > **Required** for Graphic Applications to run on Windows **(e.g. Gazebo)**
 - Set up Docker with GPU [link](https://medium.com/htc-research-engineering-blog/nvidia-docker-on-wsl2-f891dfe34ab)
-#### Linux
-- Install `nvidia-container-toolkit` [link](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker)
-- Ensure system using gpu **(impt for gazebo, check with** `nvidia_smi` **)** `prime-select nvidia`
 
 ## Getting Started
 1) Download the Docker folder and build the Docker Image using
