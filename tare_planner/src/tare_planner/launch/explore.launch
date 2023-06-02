@@ -1,0 +1,59 @@
+<launch>
+    <arg name="scenario" default="garage"/>
+    <arg name="rviz" default="true"/>
+    <arg name="rosbag_record" default="false"/>
+    <arg name="bag_path" default="Desktop"/>
+    <arg name="bag_name_prefix" default="tare"/>
+    <arg name="use_tls" default="false" />
+
+    <group if="$(arg rviz)">
+        <node launch-prefix="nice" pkg="rviz" type="rviz" name="tare_planner_ground_rviz" args="-d $(find tare_planner)/rviz/tare_planner_ground.rviz" respawn="true"/>
+    </group>
+    
+    <group if="$(arg rosbag_record)">
+        <include file="$(find tare_planner)/launch/record_bag.launch">
+        <arg name="bag_path" value="$(arg bag_path)"/>
+        <arg name="bag_name_prefix" value="$(arg bag_name_prefix)"/>
+        </include>
+    </group>
+
+    <node pkg="tare_planner" type="tare_planner_node" name="tare_planner_node" output="screen" ns="sensor_coverage_planner">
+        <rosparam command="load" file="$(find tare_planner)/config/$(arg scenario).yaml" />
+    </node>
+
+    <!-- Launch MQTT ROS Bridge Node -->
+    <node name="mqtt_bridge" pkg="mqtt_bridge" type="mqtt_bridge_node.py" output="screen" respawn="true">
+        <rosparam command="load" file="$(find mqtt_bridge)/config/la_params.yaml" />
+        <rosparam if="$(arg use_tls)" command="load" ns="mqtt" file="$(find mqtt_bridge)/config/tls_params.yaml" />
+    </node>
+
+    <!-- Python Script to Launch Vehicle Creation Node -->
+    <node pkg="vehicle_creation" type="creation_node.py" name="vehicle_manager" output="screen" respawn="true"/>
+    <!-- Python Script to Launch Availability publish Node -->
+    <node pkg="vehicle_creation" type="availability_pub.py" name="availability_publisher" output="screen" respawn="true"/>
+    <!-- Python Script to Launch Priority publish Node -->
+    <node pkg="vehicle_creation" type="priority_pub.py" name="priority_publisher" output="screen" respawn="true"/>
+
+    <!-- Python Script to Launch Behaviour Nodes -->
+    <node pkg="multi_ugv_behaviours" type="saver.py" name="saver" output="screen" respawn="true"/>
+    <node pkg="multi_ugv_behaviours" type="hunter.py" name="hunter" output="screen" respawn="true"/>
+    <node pkg="yolov7_ros" type="detector.py" name="yolo" output="screen"/>
+
+    <node pkg="octomap_server" type="octomap_server_node" name="octomap_server">
+	<param name="resolution" value="0.05" />	
+	<!-- fixed map frame (set to 'map' if SLAM or localization running!) -->
+	<param name="frame_id" type="string" value="map" />
+	<!-- maximum range to integrate (speedup!) -->
+	<param name="sensor_model/max_range" value="-1" />
+	<!-- data source to integrate (PointCloud2) -->
+	<remap from="cloud_in" to="/registered_scan" />
+    </node>
+
+    <node pkg="far_planner" type="far_planner" name="far_planner" output="log">
+        <rosparam command="load" file="$(find far_planner)/config/default.yaml" />
+        <remap from="/odom_world" to="/state_estimation"/> 
+        <remap from="/terrain_cloud" to="/terrain_map_ext"/>
+        <remap from="/scan_cloud" to="/registered_scan"/>
+        <remap from="/terrain_local_cloud" to="/terrain_map"/>
+    </node>
+</launch>

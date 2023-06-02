@@ -1,0 +1,52 @@
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="test_model">
+
+  <!-- root link, on the ground just below the model origin -->
+  <link name="base_footprint">
+   <visual>
+      <origin xyz="40 -11 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.001 0.001 0.001" />
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="base_link_joint" type="fixed">
+    <origin xyz="0 0 2.5" rpy="0 0 0" />
+    <parent link="base_footprint"/>
+    <child link="base_link" />
+  </joint>
+
+  <!-- the model -->
+  <link name="base_link">
+    <inertial>
+      <mass value="50" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="50.0" ixy="0.0" ixz="0.0"
+        iyy="50.0" iyz="0.0"
+        izz="50.0" />
+    </inertial>
+    <visual>
+      <geometry>
+        <box size="2.5 0.2 4" /> <!-- does not need to match collision -->
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="2.5 0.2 4" />
+      </geometry>
+    </collision>
+  </link>
+
+  <gazebo reference="base_footprint">
+   <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+
+  <xacro:macro name="gazebo_material" params="ref color">
+    <gazebo reference="${ref}">
+      <material>Gazebo/${color}</material>
+    </gazebo>
+  </xacro:macro>
+
+  <xacro:gazebo_material ref="base_link"  color="Yellow" />
+
+</robot>

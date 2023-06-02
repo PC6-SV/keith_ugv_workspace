@@ -1,0 +1,137 @@
+ip:
+  first:
+    host: localhost
+    port: 1883
+    priority: 1
+  second:
+    host: ugv2
+    port: 1883
+    priority: 2
+  third:
+    host: ugv3
+    port: 1883
+    priority: 3
+  fourth:
+    host: ugv4
+    port: 1883
+    priority: 4
+  
+vehicle: vehicle/1
+
+mqtt:
+  client:
+    protocol: 4      # MQTTv311
+  connection:
+    port: 1883
+    keepalive: 60
+  private_path: device/001
+#serializer: json:dumps
+#deserializer: json:loads
+bridge:
+    # Publish posestamped from ROS to MQTT
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: geometry_msgs.msg:PoseStamped
+    topic_from: /pose_stamp
+    topic_to: pose_stamp
+    frequency: 5
+    # Subscribe posestamped from MQTT to ROS
+  - factory: mqtt_bridge.bridge:MqttToRosBridge
+    msg_type: geometry_msgs.msg:PoseStamped
+    topic_from: vehicle/+/pose_stamp
+    topic_to: /pong
+    queue_size: 1
+    # Publish keypose node from ROS to MQTT
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: tare_msgs.msg:NodeAndEdge
+    topic_from: /sensor_coverage_planner/tare_planner_node/new_keypose
+    topic_to: keypose_node
+    # Subscribe keypose node from MQTT to ROS
+  - factory: mqtt_bridge.bridge:MqttToRosBridge
+    msg_type: tare_msgs.msg:NodeAndEdge
+    topic_from: vehicle/+/keypose_node
+    topic_to: /bingS
+    # Publish Covered Subspace Indices from ROS to MQTT
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: tare_msgs.msg:SubspaceArray
+    topic_from: /sensor_coverage_planner/Covered_Subspace_Indices
+    topic_to: Covered_subspaces
+    # Subscribe Covered Subspace Indices from MQTT to ROS  
+  - factory: mqtt_bridge.bridge:MqttToRosBridge
+    msg_type: tare_msgs.msg:SubspaceArray
+    topic_from: vehicle/+/Covered_subspaces
+    topic_to: /covered_subspaces
+    # Publish Exploring Subspace Indices from ROS to MQTT
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: tare_msgs.msg:SubspaceArray
+    topic_from: /sensor_coverage_planner/Exploring_Subspace_Indices
+    topic_to: Exploring_subspaces
+    # Subscribe Exploring Subspace Indices from MQTT to ROS  
+  - factory: mqtt_bridge.bridge:MqttToRosBridge
+    msg_type: tare_msgs.msg:SubspaceArray
+    topic_from: vehicle/+/Exploring_subspaces
+    topic_to: /exploring_subspaces_2
+    # Publish Robot Priority from ROS to MQTT
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: std_msgs.msg:Int32
+    topic_from: /Priority
+    topic_to: Priority
+    # Subscribe Robot Priority from MQTT to ROS  
+  - factory: mqtt_bridge.bridge:MqttToRosBridge
+    msg_type: std_msgs.msg:Int32
+    topic_from: vehicle/+/Priority
+    topic_to: /ugv2priority
+    # Publish Availability from ROS to MQTT
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: std_msgs.msg:Bool
+    topic_from: /Availability
+    topic_to: Availability
+    # Subscribe Availability from MQTT to ROS  
+  - factory: mqtt_bridge.bridge:MqttToRosBridge
+    msg_type: std_msgs.msg:Bool
+    topic_from: vehicle/+/Availability
+    topic_to: /ugv2priority
+    # Publish tare-wp from ROS to MQTT
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: geometry_msgs.msg:PointStamped
+    topic_from: /tare_way_point
+    topic_to: planner_waypoint
+    # Publish far-wp from ROS to MQTT
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: geometry_msgs.msg:PointStamped
+    topic_from: /far_way_point
+    topic_to: planner_waypoint
+    # Subscribe Availability from MQTT to ROS  
+  - factory: mqtt_bridge.bridge:MqttToRosBridge
+    msg_type: geometry_msgs.msg:PointStamped
+    topic_from: vehicle/+/planner_waypoint
+    topic_to: /ugv2priority
+    # Publish Poi from ROS to MQTT
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: geometry_msgs.msg:PointStamped
+    topic_from: /poi_out
+    topic_to: poi
+    # Subscribe Poi from MQTT to ROS  
+  - factory: mqtt_bridge.bridge:MqttToRosBridge
+    msg_type: geometry_msgs.msg:PointStamped
+    topic_from: vehicle/+/poi
+    topic_to: /poi_in
+    # Publish vgraph from ROS to MQTT
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: visibility_graph_msg.msg:Graph
+    topic_from: /robot_vgraph
+    topic_to: vgraph
+    # Subscribe vgraph from MQTT to ROS  
+  - factory: mqtt_bridge.bridge:MqttToRosBridge
+    msg_type: visibility_graph_msg.msg:Graph
+    topic_from: vehicle/+/vgraph
+    topic_to: /lol
+    # Publish del_model from ROS to MQTT
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: std_msgs.msg:String
+    topic_from: /del_model_out
+    topic_to: del_model
+    # Subscribe vgraph from MQTT to ROS  
+  - factory: mqtt_bridge.bridge:MqttToRosBridge
+    msg_type: std_msgs.msg:String
+    topic_from: vehicle/+/del_model
+    topic_to: /lol

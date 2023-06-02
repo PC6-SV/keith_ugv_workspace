@@ -1,0 +1,8 @@
+build/
+log/
+.catkin_workspace
+devel/
+traced_model.pt
+frame.png
+frame2.png
+src/tare_planner/.vscode/
